@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
+const util = require("util");
+const appendFile = util.promisify(fs.appendFile);
 const generatemarkdown = require("./utils/generateMarkdown");
 
 const fileName = "readme1.md";
@@ -40,7 +42,7 @@ const promptList = [
 ];
 
 async function writeToFile(data) {
-    fs.appendFile(fileName, data + '\n\n', function(err) {
+    await appendFile(fileName, data + '\n\n', function(err) {
         if (err) {
         return console.log(err);
         }
@@ -74,9 +76,9 @@ async function init() {
                 await writeToFile("```" + '\n' + promptObj.projectDesc + '\n' + "```");
                 break;
             case "tableOfContents": 
+                promptObj = await inquirer.prompt(promptList[i]);    
                 markDnTxt = await generatemarkdown({sectionName: "Table of Contents"});
-                await writeToFile(markDnTxt);
-                promptObj = await inquirer.prompt(promptList[i]);   
+                await writeToFile(markDnTxt);   
                 choicesArr = promptObj.tableOfContents;
                 if (choicesArr) {
                     for (let j=0; j < choicesArr.length; j++) {
@@ -97,23 +99,22 @@ async function init() {
             await writeToFile(markDnTxt);
             switch (choicesArr[k]) { 
                 case "Installation": 
-                    promptObj = await inquirer.prompt({type: "input", message: "Enter Installation Information: ", name: "installInfo"});
-                    console.log(promptObj);
-                    break;
+                    promptObj = await inquirer.prompt({type: "input", message: "Enter Installation Information: " + k, name: "installInfo"});
+                    await writeToFile("```" + '\n' + promptObj.installInfo + '\n' + "```");                    break;
                 case "Usage": 
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Usage Information: ", name: "usageInfo"});
-                    console.log(promptObj);
+                    await writeToFile("```" + '\n' + promptObj.usageInfo + '\n' + "```");    
                     break;
                 case "Contributing": 
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Contributing Information: ", name: "contrInfo"});
-                    console.log(promptObj);
+                    await writeToFile("```" + '\n' + promptObj.contrInfo + '\n' + "```");    
                     break;
                 case "Tests":
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Test cases: ", name: "testInfo"});
-                    console.log(promptObj);
+                    await writeToFile("```" + '\n' + promptObj.testInfo + '\n' + "```");    
                     break;
-                case "Questions":
-                    break;
+                // case "Questions":
+                //     break;
                 default: 
                     break;
             }
