@@ -1,18 +1,21 @@
-# t1
+# T1
+
+[![GitHub issues](https://img.shields.io/github/issues/smenjoge/geowert)](https://github.com/smenjoge/geowert/issues) 
+
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/smenjoge/geowert)](https://github.com/smenjoge/geowert/pulls) 
+
+[![GitHub contributors](https://img.shields.io/github/contributors/smenjoge/geowert)](https://github.com/smenjoge/geowert/graphs/contributors) 
 
 ## Descripton
 
 ```
-sdknmfdnmfkm\
+sdklfnjsdlkfnmdwlkfnm
 
+asdf;lmd;lfmwed;lfm
+1) 
+2) 
+3) 
 
-;adsfoknadfolkndaflknlkm
-
-1
-skl;dmflskdnfldkmfl;m
-
-
-adlknfcladknmflkmn
 ```
 
 ## Table of Contents
@@ -23,29 +26,21 @@ adlknfcladknmflkmn
 
 * [Contributing](#Contributing)
 
-* [Tests](#Tests)
-
 ## Installation
 
 ```
- sdkjfnedkjfnkjn
+sdlkfnmewkfnmlknm
 ```
 
 ## Usage
 
 ```
-djkfndejfn
+wdifjnewkjfn
 ```
 
 ## Contributing
 
 ```
-sfjrdhnwkjkfn
-```
-
-## Tests
-
-```
-sdkfjndkfnkn
+wdkfjnewoihjin
 ```
 
