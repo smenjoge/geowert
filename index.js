@@ -10,7 +10,7 @@ const badgeObj = {
 };
 let badgeMarkdown;
 
-const fileName = "readme1.md";
+const fileName = "README.md";
 
 const promptList = [
     {
@@ -48,7 +48,7 @@ const promptList = [
 ];
 
 async function writeToFile(data) {
-    await appendFile(fileName, data + '\n\n', function(err) {
+    await appendFile(fileName, data, function(err) {
         if (err) {
         return console.log(err);
         }
@@ -67,7 +67,7 @@ async function writeBadge() {
 
     badgeObj.badgeName = "contributors"
     badgeMarkdown = await getMarkdown.generateBadge(badgeObj);
-    await writeToFile(badgeMarkdown);
+    await writeToFile(badgeMarkdown + '\n\n');
 
     return "Badges created";
 }
@@ -98,24 +98,24 @@ async function init() {
             case "projectTitle": 
                 promptObj = await inquirer.prompt(promptList[i]);
                 markDnTxt = await getMarkdown.generateMarkdown(promptObj);
-                await writeToFile(markDnTxt);
+                await writeToFile(markDnTxt + '\n\n');
                 await writeBadge();
                 break;
             case "projectDesc": 
                 promptObj = await inquirer.prompt(promptList[i]);    
                 markDnTxt = await getMarkdown.generateMarkdown({sectionName: "Descripton"});
-                await writeToFile(markDnTxt);
-                await writeToFile("```" + '\n' + promptObj.projectDesc + '\n' + "```");
+                await writeToFile(markDnTxt + '\n');
+                await writeToFile("```" + '\n' + promptObj.projectDesc + '\n' + "```" + '\n\n');
                 break;
             case "tableOfContents": 
                 promptObj = await inquirer.prompt(promptList[i]);    
                 markDnTxt = await getMarkdown.generateMarkdown({sectionName: "Table of Contents"});
-                await writeToFile(markDnTxt);   
+                await writeToFile(markDnTxt + '\n');   
                 choicesArr = promptObj.tableOfContents;
                 if (choicesArr) {
                     for (let j=0; j < choicesArr.length; j++) {
                         markDnTxt = await getMarkdown.generateMarkdown({listItem: choicesArr[j]});
-                        await writeToFile(markDnTxt);
+                        await writeToFile(markDnTxt + '\n');
                     };
                 };
                 break;
@@ -129,23 +129,23 @@ async function init() {
         for (let k=0; k < choicesArr.length; k++) {
             let promptObj;
             let markDnTxt = await getMarkdown.generateMarkdown({sectionName: choicesArr[k]});
-            await writeToFile(markDnTxt);
+            await writeToFile(markDnTxt + '\n');
             switch (choicesArr[k]) { 
                 case "Installation": 
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Installation Information: ", name: "installInfo"});
-                    await writeToFile("```" + '\n' + promptObj.installInfo + '\n' + "```");                    
+                    await writeToFile("```" + '\n' + promptObj.installInfo + '\n' + "```" + '\n\n');                    
                     break;
                 case "Usage": 
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Usage Information: ", name: "usageInfo"});
-                    await writeToFile("```" + '\n' + promptObj.usageInfo + '\n' + "```");    
+                    await writeToFile("```" + '\n' + promptObj.usageInfo + '\n' + "```" + '\n\n');    
                     break;
                 case "Contributing": 
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Contributing Information: ", name: "contrInfo"});
-                    await writeToFile("```" + '\n' + promptObj.contrInfo + '\n' + "```");    
+                    await writeToFile("```" + '\n' + promptObj.contrInfo + '\n' + "```" + '\n\n');    
                     break;
                 case "Tests":
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Test cases: ", name: "testInfo"});
-                    await writeToFile("```" + '\n' + promptObj.testInfo + '\n' + "```");    
+                    await writeToFile("```" + '\n' + promptObj.testInfo + '\n' + "```" + '\n\n');    
                     break;
                 // case "Questions":
                 //     break;
