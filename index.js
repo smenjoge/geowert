@@ -105,7 +105,7 @@ async function init() {
                 promptObj = await inquirer.prompt(promptList[i]);    
                 markDnTxt = await getMarkdown.generateMarkdown({sectionName: "Descripton"});
                 await writeToFile(markDnTxt + '\n');
-                await writeToFile("```" + '\n' + promptObj.projectDesc + '\n' + "```" + '\n\n');
+                await writeToFile("```sh" + '\n' + promptObj.projectDesc + '\n' + "```" + '\n\n');
                 break;
             case "tableOfContents": 
                 promptObj = await inquirer.prompt(promptList[i]);    
@@ -128,24 +128,38 @@ async function init() {
     if (choicesArr) {
         for (let k=0; k < choicesArr.length; k++) {
             let promptObj;
-            let markDnTxt = await getMarkdown.generateMarkdown({sectionName: choicesArr[k]});
-            await writeToFile(markDnTxt + '\n');
+            let markDnTxt;
             switch (choicesArr[k]) { 
                 case "Installation": 
-                    promptObj = await inquirer.prompt({type: "input", message: "Enter Installation Information: ", name: "installInfo"});
-                    await writeToFile("```" + '\n' + promptObj.installInfo + '\n' + "```" + '\n\n');                    
+                    // markDnTxt = await getMarkdown.generateMarkdown({sectionName: choicesArr[k]});
+                    // await writeToFile(markDnTxt + '\n');
+                    console.log("Before:" , promptObj);
+                    promptObj = await inquirer.prompt({
+                                    type: "input", 
+                                    message: "Enter Installation Information: " + k, 
+                                    name: "installInfo"
+                                }).catch(console.log);
+                    console.log("After:" + promptObj);
+                    // await writeToFile("```sh" + '\n' + promptObj.installInfo + '\n' + "```" + '\n\n');                    
+                    console.log("prompt2");
                     break;
                 case "Usage": 
+                    markDnTxt = await getMarkdown.generateMarkdown({sectionName: choicesArr[k]});
+                    await writeToFile(markDnTxt + '\n');
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Usage Information: ", name: "usageInfo"});
-                    await writeToFile("```" + '\n' + promptObj.usageInfo + '\n' + "```" + '\n\n');    
+                    await writeToFile("```sh" + '\n' + promptObj.usageInfo + '\n' + "```" + '\n\n');    
                     break;
                 case "Contributing": 
+                    markDnTxt = await getMarkdown.generateMarkdown({sectionName: choicesArr[k]});
+                    await writeToFile(markDnTxt + '\n');
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Contributing Information: ", name: "contrInfo"});
-                    await writeToFile("```" + '\n' + promptObj.contrInfo + '\n' + "```" + '\n\n');    
+                    await writeToFile("```sh" + '\n' + promptObj.contrInfo + '\n' + "```" + '\n\n');    
                     break;
                 case "Tests":
+                    markDnTxt = await getMarkdown.generateMarkdown({sectionName: choicesArr[k]});
+                    await writeToFile(markDnTxt + '\n');
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Test cases: ", name: "testInfo"});
-                    await writeToFile("```" + '\n' + promptObj.testInfo + '\n' + "```" + '\n\n');    
+                    await writeToFile("```sh" + '\n' + promptObj.testInfo + '\n' + "```" + '\n\n');    
                     break;
                 // case "Questions":
                 //     break;
