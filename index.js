@@ -3,6 +3,7 @@ const fs = require('fs');
 const util = require("util");
 const appendFile = util.promisify(fs.appendFile);
 const getMarkdown = require("./utils/generateMarkdown");
+let gitUserName;
 const badgeObj = {
     badgeName: "",
     gitUser: "",
@@ -42,7 +43,8 @@ const promptList = [
           "Usage", 
           "Contributing", 
           "Tests",
-          "Questions"
+          "Questions",
+          "License"
         ]
       }
 ];
@@ -90,6 +92,7 @@ async function init() {
             case "userName":
                 promptObj = await inquirer.prompt(promptList[i]);
                 badgeObj.gitUser = promptObj.userName;
+                gitUserName = promptObj.userName;
                 break;
             case "repoName":
                 promptObj = await inquirer.prompt(promptList[i]);
@@ -147,8 +150,16 @@ async function init() {
                     promptObj = await inquirer.prompt({type: "input", message: "Enter Test cases: ", name: "testInfo"});
                     await writeToFile("```" + '\n' + promptObj.testInfo + '\n' + "```" + '\n\n');    
                     break;
-                // case "Questions":
-                //     break;
+                case "Questions":
+                    markDnTxt = await getMarkdown.generateMarkdown({gitImage: gitUserName});
+                    await writeToFile(markDnTxt);
+                    promptObj = await inquirer.prompt({type: "input", message: "Enter GitHub Profile Email address: ", name: "questionInfo"});
+                    await writeToFile("   " + promptObj.questionInfo + '\n');
+                    break;
+                case "License": 
+                    promptObj = await inquirer.prompt({type: "input", message: "Enter License Information: ", name: "licenseInfo"});
+                    await writeToFile("```" + '\n' + promptObj.licenseInfo + '\n' + "```" + '\n\n');    
+                    break;
                 default: 
                     break;
             };
